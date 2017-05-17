@@ -1,0 +1,41 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;MyServer&gt;">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../new1" />
+      <root url="file://$PROJECT_DIR$/../goim" />
+      <root url="file://$PROJECT_DIR$/../metalApi" />
+      <root url="file://$PROJECT_DIR$/../gosnippet" />
+      <root url="file://$PROJECT_DIR$/../hypercube" />
+      <root url="file://$PROJECT_DIR$/../projectFilesBackup" />
+      <root url="file://$PROJECT_DIR$/../echoE" />
+      <root url="file://$PROJECT_DIR$/../awesomeProject" />
+      <root url="file://$PROJECT_DIR$/../golang.org" />
+      <root url="file://$PROJECT_DIR$/../github.com" />
+      <root url="file://$PROJECT_DIR$/../qiancunApiGo" />
+      <root url="file://$PROJECT_DIR$/../gopkg.in" />
+      <root url="file://$PROJECT_DIR$/../.idea" />
+      <root url="file://$PROJECT_DIR$/../OfficeSuiteServer" />
+      <root url="file://$PROJECT_DIR$/../gistar-server" />
+    </CLASSES>
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../new1" />
+      <root url="file://$PROJECT_DIR$/../goim" />
+      <root url="file://$PROJECT_DIR$/../metalApi" />
+      <root url="file://$PROJECT_DIR$/../gosnippet" />
+      <root url="file://$PROJECT_DIR$/../hypercube" />
+      <root url="file://$PROJECT_DIR$/../projectFilesBackup" />
+      <root url="file://$PROJECT_DIR$/../echoE" />
+      <root url="file://$PROJECT_DIR$/../awesomeProject" />
+      <root url="file://$PROJECT_DIR$/../golang.org" />
+      <root url="file://$PROJECT_DIR$/../github.com" />
+      <root url="file://$PROJECT_DIR$/../qiancunApiGo" />
+      <root url="file://$PROJECT_DIR$/../gopkg.in" />
+      <root url="file://$PROJECT_DIR$/../.idea" />
+      <root url="file://$PROJECT_DIR$/../OfficeSuiteServer" />
+      <root url="file://$PROJECT_DIR$/../gistar-server" />
+    </SOURCES>
+    <excluded>
+      <root url="file://$PROJECT_DIR$" />
+    </excluded>
+  </library>
+</component>
