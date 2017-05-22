@@ -24,9 +24,39 @@
 
 package module
 
+import (
+	"MyServer/sqlHelper"
+	"github.com/pkg/errors"
+)
+
 type User struct {
 	Name     string       `json:"name" form:"name" query:"name"`
 	Password string       `json:"password" form:"password" query:"password"`
+}
+
+//添加新用户
+func NewUser(name, password string) {
+	sqlHelper.Insert(sqlHelper.Db, "INSERT INTO user (name, password) VALUES (?, ?)", name, password)
+}
+
+//检查用户是否已存在
+func IsUserExisted(name string) (User, error) {
+	rowMap, err := sqlHelper.FetchRow(sqlHelper.Db, "SELECT * FROM `user` WHERE `name` = ? LIMIT 1", name)
+
+	if err != nil {
+		return User{}, err
+	}
+
+	user := User{
+		Name:   (*rowMap)["name"],
+		Password:  (*rowMap)["password"],
+	}
+
+	if user.Name != "" {
+		return user, errors.New("User existed!")
+	}
+
+	return user, err
 }
 
 type UserInfo struct {
@@ -37,3 +67,5 @@ type UserInfo struct {
 	Sex      int       `json:"sex" from:"sex" query:"sex"`
 	Birthday string    `json:"birthday" from:"birthday" query:"birthday"`
 }
+
+

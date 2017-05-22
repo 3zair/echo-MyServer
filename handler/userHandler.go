@@ -30,9 +30,7 @@ import (
 	"MyServer/module"
 	"MyServer/config"
 	_ "github.com/go-sql-driver/mysql"
-	"MyServer/sqlHelper"
 	"MyServer/utils"
-	"fmt"
 )
 
 func LoginHandler(c echo.Context) error {
@@ -42,18 +40,12 @@ func LoginHandler(c echo.Context) error {
 		return err
 	}
 
-	rowMap, err := sqlHelper.FetchRow(sqlHelper.Db, "SELECT * FROM `user` WHERE `name` = ? LIMIT 0, 100", user.Name)
-
-	if err != nil {
-		return err
-	}
-
-	//数据库里查到的密码
-	password := (*rowMap)["password"]
+	//从数据库中取出的数据
+	userFromSql, _ := module.IsUserExisted(user.Name)
 
 	sess := utils.GlobalSessions.SessionStart(c.Response().Writer, c.Request())
 
-	if !utils.CompareHash([]byte(password), user.Password) {
+	if !utils.CompareHash([]byte(userFromSql.Password), user.Password) {
 		return c.JSON(config.ErrIncorrectPass, user)
 	}
 
@@ -78,13 +70,19 @@ func RegisterHandler(c echo.Context) error {
 	password := c.QueryParam("password")
 	repeat := c.QueryParam("repeat")
 
-	fmt.Println(name + " " + password + " " + repeat)
-
 	if name == "" || password == "" || repeat == "" {
 		status = config.ErrInvalidParam
 	} else if password != repeat {
 		status = config.ErrIncorrectPass
 	} else {
+		//检查数据库是否有这个用户
+		_, err := module.IsUserExisted(name)
+
+		if err != nil {
+			status = config.ErrUserExists
+			return err
+		}
+
 		//保存至数据库
 		pass, err := utils.GenerateHash(password)
 
@@ -92,7 +90,7 @@ func RegisterHandler(c echo.Context) error {
 			return err
 		}
 
-		sqlHelper.Insert(sqlHelper.Db, "INSERT INTO user (name, password) VALUES (?, ?)", name, string(pass))
+		module.NewUser(name, string(pass))
 	}
 
 	status_json := &module.Err{
@@ -107,11 +105,15 @@ func Logout(c echo.Context) error {
 
 	sess := utils.GlobalSessions.SessionStart(c.Response().Writer, c.Request())
 	name := sess.Get("login")
-	err := module.RemoveUser(name.(string))
 
-	if err != nil {
+	if name != nil {
+		err := module.RemoveUser(name.(string))
+
+		if err != nil {
+			status = config.ErrLoginRequired
+		}
+	} else {
 		status = config.ErrLoginRequired
-		return err
 	}
 
 	sess.Delete("login")

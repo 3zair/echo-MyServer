@@ -36,7 +36,7 @@ func Init() {
 	e.POST("/user/register", handler.RegisterHandler)
 	e.POST("/user/login", handler.LoginHandler, middleware.LoginMiddleware)
 	e.POST("/user/logout", handler.Logout)
-	e.POST("/user/reviseInfo", handler.ReviseInfo)
+	e.POST("/user/reviseUserInfo", handler.ReviseInfo)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }
