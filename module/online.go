@@ -22,21 +22,40 @@
  * SOFTWARE.
  */
 
-package route
+package module
 
 import (
-	"github.com/labstack/echo"
-	"MyServer/handler"
-	"MyServer/middleware"
+	"fmt"
+	"github.com/pkg/errors"
 )
 
-var e = echo.New()
+var Online = make(map[string]string)
 
-func Init() {
-	e.POST("/user/register", handler.RegisterHandler)
-	e.POST("/user/login", handler.LoginHandler, middleware.LoginMiddleware)
-	e.POST("/user/logout", handler.Logout)
-	e.POST("/user/reviseInfo", handler.ReviseInfo)
+func PutUser(key, value string) {
+	Online[key] = value
+}
 
-	e.Logger.Fatal(e.Start(":1323"))
+func RemoveUser(key string) error {
+	found := CheckIsOnline(key)
+	if !found {
+		return errors.New("The key: " + key + " is not exist.")
+	}
+	delete(Online, key)
+	return nil
+}
+
+func CheckIsOnline(key string) bool {
+	found := false
+
+	if _, ok := Online[key]; ok {
+		found = true
+	}
+
+	return found
+}
+
+func LogOnline() {
+	for k, v := range Online {
+		fmt.Println(k, v)
+	}
 }

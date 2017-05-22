@@ -22,21 +22,31 @@
  * SOFTWARE.
  */
 
-package route
+package main
 
 import (
-	"github.com/labstack/echo"
-	"MyServer/handler"
-	"MyServer/middleware"
+	"net/http"
+	"fmt"
+	"strings"
 )
 
-var e = echo.New()
-
-func Init() {
-	e.POST("/user/register", handler.RegisterHandler)
-	e.POST("/user/login", handler.LoginHandler, middleware.LoginMiddleware)
-	e.POST("/user/logout", handler.Logout)
-	e.POST("/user/reviseInfo", handler.ReviseInfo)
-
-	e.Logger.Fatal(e.Start(":1323"))
+func sayHelloName(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	fmt.Println(r.Form)
+	fmt.Println("path", r.URL.Path)
+	fmt.Println("scheme", r.URL.Scheme)
+	fmt.Println(r.Form["url_long"])
+	for k, v := range r.Form {
+		fmt.Println("key:", k)
+		fmt.Println("val:", strings.Join(v, ""))
+	}
+	fmt.Fprintf(w, "Hello astaxie!")
 }
+//
+//func main() {
+//	http.HandleFunc("/", sayHelloName)
+//	err := http.ListenAndServe(":9090", nil)
+//	if err != nil {
+//		log.Fatal("ListenAndServe: ", err)
+//	}
+//}

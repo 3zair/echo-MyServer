@@ -22,21 +22,16 @@
  * SOFTWARE.
  */
 
-package route
+package utils
 
 import (
-	"github.com/labstack/echo"
-	"MyServer/handler"
-	"MyServer/middleware"
+	"github.com/astaxie/session"
+	_ "github.com/astaxie/session/providers/memory"
 )
 
-var e = echo.New()
+var GlobalSessions *session.Manager
 
-func Init() {
-	e.POST("/user/register", handler.RegisterHandler)
-	e.POST("/user/login", handler.LoginHandler, middleware.LoginMiddleware)
-	e.POST("/user/logout", handler.Logout)
-	e.POST("/user/reviseInfo", handler.ReviseInfo)
-
-	e.Logger.Fatal(e.Start(":1323"))
+func init() {
+	GlobalSessions, _ = session.NewManager("memory", "gosessionid", 3600)
+	go GlobalSessions.GC()
 }

@@ -22,21 +22,17 @@
  * SOFTWARE.
  */
 
-package route
+package middleware
 
 import (
 	"github.com/labstack/echo"
-	"MyServer/handler"
-	"MyServer/middleware"
 )
 
-var e = echo.New()
+func LoginMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 
-func Init() {
-	e.POST("/user/register", handler.RegisterHandler)
-	e.POST("/user/login", handler.LoginHandler, middleware.LoginMiddleware)
-	e.POST("/user/logout", handler.Logout)
-	e.POST("/user/reviseInfo", handler.ReviseInfo)
-
-	e.Logger.Fatal(e.Start(":1323"))
+	return func(c echo.Context) error {
+		c.Response().Header().Set(echo.HeaderServer, "Echo/3.0")
+		return next(c)
+	}
 }
+
