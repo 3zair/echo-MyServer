@@ -27,11 +27,16 @@ package module
 import (
 	"github.com/pkg/errors"
 	"MyServer/utils"
+	"sync"
 )
 
 var Online = make(map[string]string)
+var mutex = sync.Mutex{}
 
 func PutUser(key, value string) {
+	defer mutex.Unlock()
+
+	mutex.Lock()
 	Online[key] = value
 }
 
