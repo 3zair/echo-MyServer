@@ -30,14 +30,21 @@ import (
 	"sync"
 )
 
-var Online = make(map[string]string)
-var mutex = sync.Mutex{}
+type OnlineTable struct {
+	Online         map[string]string
+	mutex          sync.Mutex
+}
+
+var onlineTable = OnlineTable{
+	Online:      make(map[string]string),
+	mutex:       sync.Mutex{},
+}
 
 func PutUser(key, value string) {
-	defer mutex.Unlock()
+	defer onlineTable.mutex.Unlock()
 
-	mutex.Lock()
-	Online[key] = value
+	onlineTable.mutex.Lock()
+	onlineTable.Online[key] = value
 }
 
 func RemoveUser(key string) error {
@@ -45,14 +52,14 @@ func RemoveUser(key string) error {
 	if !found {
 		return errors.New("The key: " + key + " is not exist.")
 	}
-	delete(Online, key)
+	delete(onlineTable.Online, key)
 	return nil
 }
 
 func CheckIsOnline(key string) bool {
 	found := false
 
-	if _, ok := Online[key]; ok {
+	if _, ok := onlineTable.Online[key]; ok {
 		found = true
 	}
 
@@ -60,7 +67,7 @@ func CheckIsOnline(key string) bool {
 }
 
 func LogOnline() {
-	for k, v := range Online {
+	for k, v := range onlineTable.Online {
 		utils.Log("online.go", 60, k, v)
 	}
 }

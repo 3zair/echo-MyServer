@@ -16,6 +16,7 @@
       <root url="file://$PROJECT_DIR$/../.idea" />
       <root url="file://$PROJECT_DIR$/../OfficeSuiteServer" />
       <root url="file://$PROJECT_DIR$/../gistar-server" />
+      <root url="file://$PROJECT_DIR$/../workflow" />
     </CLASSES>
     <SOURCES>
       <root url="file://$PROJECT_DIR$/../new1" />
@@ -33,6 +34,7 @@
       <root url="file://$PROJECT_DIR$/../.idea" />
       <root url="file://$PROJECT_DIR$/../OfficeSuiteServer" />
       <root url="file://$PROJECT_DIR$/../gistar-server" />
+      <root url="file://$PROJECT_DIR$/../workflow" />
     </SOURCES>
     <excluded>
       <root url="file://$PROJECT_DIR$" />

@@ -30,13 +30,11 @@ import (
 	"MyServer/middleware"
 )
 
-var e = echo.New()
+var E = echo.New()
 
-func Init() {
-	e.POST("/user/register", handler.RegisterHandler)
-	e.POST("/user/login", handler.LoginHandler, middleware.LoginMiddleware)
-	e.POST("/user/logout", handler.Logout)
-	e.POST("/user/reviseUserInfo", handler.ReviseInfo)
-
-	e.Logger.Fatal(e.Start(":1323"))
+func init() {
+	E.POST("/user/register", handler.RegisterHandler)
+	E.POST("/user/login", handler.LoginHandler, middleware.LoginMiddleware)
+	E.POST("/user/logout", handler.Logout)
+	E.POST("/user/reviseUserInfo", handler.ReviseInfo)
 }

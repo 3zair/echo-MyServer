@@ -30,5 +30,5 @@ import (
 )
 
 func main() {
-	route.Init()
+	route.E.Logger.Fatal(route.E.Start(":1323"))
 }
