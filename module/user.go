@@ -58,14 +58,3 @@ func IsUserExisted(name string) (User, error) {
 
 	return user, err
 }
-
-type UserInfo struct {
-	Id       int       `json:"id" from:"id" query:"id"`
-	Name     string    `json:"name" from:"name" query:"name"`
-	Age      int       `json:"age" from:"age" query:"age"`
-	City     string    `json:"city" from:"city" query:"city"`
-	Sex      int       `json:"sex" from:"sex" query:"sex"`
-	Birthday string    `json:"birthday" from:"birthday" query:"birthday"`
-}
-
-

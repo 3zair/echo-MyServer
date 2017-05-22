@@ -22,40 +22,34 @@
  * SOFTWARE.
  */
 
-package module
+package handler
 
 import (
-	"github.com/pkg/errors"
+	"github.com/labstack/echo"
+	"MyServer/module"
 	"MyServer/utils"
+	"MyServer/config"
+	"net/http"
 )
 
-var Online = make(map[string]string)
+func ReviseInfo(c echo.Context) error {
+	status := config.ErrSucceed
+	data := module.UserInfo{}
 
-func PutUser(key, value string) {
-	Online[key] = value
-}
+	sess := utils.GlobalSessions.SessionStart(c.Response().Writer, c.Request())
 
-func RemoveUser(key string) error {
-	found := CheckIsOnline(key)
-	if !found {
-		return errors.New("The key: " + key + " is not exist.")
-	}
-	delete(Online, key)
-	return nil
-}
+	name := sess.Get("login")
 
-func CheckIsOnline(key string) bool {
-	found := false
-
-	if _, ok := Online[key]; ok {
-		found = true
+	if name != nil {
+		data, _ = module.GetUserInfoFromSql(name.(string))
+	} else {
+		status = config.ErrLoginRequired
 	}
 
-	return found
-}
-
-func LogOnline() {
-	for k, v := range Online {
-		utils.Log("online.go", 60, k, v)
+	status_json := module.Err{
+		Status: status,
+		Data: data,
 	}
+
+	return c.JSONPretty(http.StatusOK, status_json, " ")
 }

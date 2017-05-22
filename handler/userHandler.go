@@ -126,7 +126,3 @@ func Logout(c echo.Context) error {
 
 	return c.JSONPretty(http.StatusOK, status_json, " ")
 }
-
-func ReviseInfo(c echo.Context) error {
-	return nil
-}

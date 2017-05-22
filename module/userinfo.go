@@ -25,37 +25,40 @@
 package module
 
 import (
-	"github.com/pkg/errors"
-	"MyServer/utils"
+	"MyServer/sqlHelper"
+	"fmt"
+	"strconv"
 )
 
-var Online = make(map[string]string)
-
-func PutUser(key, value string) {
-	Online[key] = value
+type UserInfo struct {
+	Id       int       `json:"id" from:"id" query:"id"`
+	Name     string    `json:"name" from:"name" query:"name"`
+	Age      int       `json:"age" from:"age" query:"age"`
+	City     string    `json:"city" from:"city" query:"city"`
+	Sex      int       `json:"sex" from:"sex" query:"sex"`
+	Birthday string    `json:"birthday" from:"birthday" query:"birthday"`
 }
 
-func RemoveUser(key string) error {
-	found := CheckIsOnline(key)
-	if !found {
-		return errors.New("The key: " + key + " is not exist.")
-	}
-	delete(Online, key)
-	return nil
-}
+func GetUserInfoFromSql(name string) (UserInfo, error) {
 
-func CheckIsOnline(key string) bool {
-	found := false
+	rowMap, err := sqlHelper.FetchRow(sqlHelper.Db, "SELECT * FROM `user` WHERE `name` = ? LIMIT 1", name)
 
-	if _, ok := Online[key]; ok {
-		found = true
+	if err != nil {
+		return UserInfo{}, err
 	}
 
-	return found
-}
+	id, _ := strconv.Atoi((*rowMap)["id"])
+	age, _ := strconv.Atoi((*rowMap)["age"])
+	sex, _ := strconv.Atoi((*rowMap)["sex"])
 
-func LogOnline() {
-	for k, v := range Online {
-		utils.Log("online.go", 60, k, v)
+	info := UserInfo{
+		Id:    id,
+		Name:  (*rowMap)["name"],
+		Age:   age,
+		City:  (*rowMap)["city"],
+		Sex:   sex,
+		Birthday:   (*rowMap)["birthday"],
 	}
+	fmt.Println(info)
+	return info, nil
 }

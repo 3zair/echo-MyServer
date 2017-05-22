@@ -22,40 +22,10 @@
  * SOFTWARE.
  */
 
-package module
+package utils
 
-import (
-	"github.com/pkg/errors"
-	"MyServer/utils"
-)
+import "fmt"
 
-var Online = make(map[string]string)
-
-func PutUser(key, value string) {
-	Online[key] = value
-}
-
-func RemoveUser(key string) error {
-	found := CheckIsOnline(key)
-	if !found {
-		return errors.New("The key: " + key + " is not exist.")
-	}
-	delete(Online, key)
-	return nil
-}
-
-func CheckIsOnline(key string) bool {
-	found := false
-
-	if _, ok := Online[key]; ok {
-		found = true
-	}
-
-	return found
-}
-
-func LogOnline() {
-	for k, v := range Online {
-		utils.Log("online.go", 60, k, v)
-	}
+func Log(file string, line int8, msg ...interface{}) {
+	fmt.Println(file + " in ", line,  " ==> ", msg)
 }
