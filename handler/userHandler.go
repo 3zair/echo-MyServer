@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2017 Tang Xiaoji.
+ * Copyright (c) 2017 SmartestEE Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -51,7 +51,7 @@ func LoginHandler(c echo.Context) error {
 
 	sess.Set("login", user.Name)
 
-	status_json := &module.Err{
+	status_json := &module.Err {
 		Status: config.ErrSucceed,
 		Data: user.Name,
 	}
@@ -118,7 +118,7 @@ func Logout(c echo.Context) error {
 
 	sess.Delete("login")
 
-	status_json := &module.Err{
+	status_json := &module.Err {
 		Status: status,
 	}
 

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2017 Tang Xiaoji.
+ * Copyright (c) 2017 SmartestEE Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,6 @@ type UserInfo struct {
 }
 
 func GetUserInfoFromSql(name string) (UserInfo, error) {
-
 	rowMap, err := sqlHelper.FetchRow(sqlHelper.Db, "SELECT * FROM `user` WHERE `name` = ? LIMIT 1", name)
 
 	if err != nil {

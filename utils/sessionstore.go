@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2017 Tang Xiaoji.
+ * Copyright (c) 2017 SmartestEE Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -131,8 +131,3 @@ func (pder *Provider) SessionUpdate(sid string) error {
 	}
 	return nil
 }
-
-//func init() {
-//	pder.sessions = make(map[string]*list.Element, 0)
-//	session.Register("memory", pder)
-//}

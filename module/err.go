@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2017 Tang Xiaoji.
+ * Copyright (c) 2017 SmartestEE Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,5 +26,5 @@ package module
 
 type Err struct {
 	Status      int            `json:"status"`
-	Data        interface{}     `json:"data"`
+	Data        interface{}    `json:"data"`
 }
